@@ -69,6 +69,7 @@
 		EF1626491A027A820049668C /* FPMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1626471A027A820049668C /* FPMenuScene.cpp */; };
 		EF16264D1A0281680049668C /* FPGameScene1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF16264B1A0281680049668C /* FPGameScene1.cpp */; };
 		EF20ED761A03EBC100D6D281 /* FPPlayScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF20ED741A03EBC100D6D281 /* FPPlayScene.cpp */; };
+		EF915A941A05221B00FCE091 /* libCocos2dxBmobSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF915A931A05221B00FCE091 /* libCocos2dxBmobSDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,17 @@
 		EF16264C1A0281680049668C /* FPGameScene1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPGameScene1.h; sourceTree = "<group>"; };
 		EF20ED741A03EBC100D6D281 /* FPPlayScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPPlayScene.cpp; sourceTree = "<group>"; };
 		EF20ED751A03EBC100D6D281 /* FPPlayScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPlayScene.h; sourceTree = "<group>"; };
+		EF915A891A05221100FCE091 /* Bmob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bmob.h; sourceTree = "<group>"; };
+		EF915A8A1A05221100FCE091 /* BmobBase64Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobBase64Util.h; sourceTree = "<group>"; };
+		EF915A8B1A05221100FCE091 /* BmobConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobConstant.h; sourceTree = "<group>"; };
+		EF915A8C1A05221100FCE091 /* BmobDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobDelegate.h; sourceTree = "<group>"; };
+		EF915A8D1A05221100FCE091 /* BmobFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobFileUtil.h; sourceTree = "<group>"; };
+		EF915A8E1A05221100FCE091 /* BmobHttpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobHttpUtils.h; sourceTree = "<group>"; };
+		EF915A8F1A05221100FCE091 /* BmobJsonUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobJsonUtil.h; sourceTree = "<group>"; };
+		EF915A901A05221100FCE091 /* BmobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobModel.h; sourceTree = "<group>"; };
+		EF915A911A05221100FCE091 /* BmobParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobParams.h; sourceTree = "<group>"; };
+		EF915A921A05221100FCE091 /* BmobResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BmobResult.h; sourceTree = "<group>"; };
+		EF915A931A05221B00FCE091 /* libCocos2dxBmobSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCocos2dxBmobSDK.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +193,7 @@
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
+				EF915A941A05221B00FCE091 /* libCocos2dxBmobSDK.a in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 			);
@@ -257,6 +270,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF915A931A05221B00FCE091 /* libCocos2dxBmobSDK.a */,
 				D6B0611A1803AB670077942B /* CoreMotion.framework */,
 				503AE11A17EB9C5A00D1A890 /* IOKit.framework */,
 				503AE11117EB99EE00D1A890 /* libcurl.dylib */,
@@ -292,6 +306,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				EF915A881A05221100FCE091 /* header */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
@@ -353,6 +368,23 @@
 			name = Icons;
 			path = ios;
 			sourceTree = SOURCE_ROOT;
+		};
+		EF915A881A05221100FCE091 /* header */ = {
+			isa = PBXGroup;
+			children = (
+				EF915A891A05221100FCE091 /* Bmob.h */,
+				EF915A8A1A05221100FCE091 /* BmobBase64Util.h */,
+				EF915A8B1A05221100FCE091 /* BmobConstant.h */,
+				EF915A8C1A05221100FCE091 /* BmobDelegate.h */,
+				EF915A8D1A05221100FCE091 /* BmobFileUtil.h */,
+				EF915A8E1A05221100FCE091 /* BmobHttpUtils.h */,
+				EF915A8F1A05221100FCE091 /* BmobJsonUtil.h */,
+				EF915A901A05221100FCE091 /* BmobModel.h */,
+				EF915A911A05221100FCE091 /* BmobParams.h */,
+				EF915A921A05221100FCE091 /* BmobResult.h */,
+			);
+			path = header;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -561,7 +593,7 @@
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -591,7 +623,7 @@
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
