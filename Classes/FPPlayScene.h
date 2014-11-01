@@ -26,7 +26,7 @@ public:
     // implement the "static create()" method manually
     
     cocos2d::Sprite* myplane;
-    
+    cocos2d::ParticleSun* fire;
     CREATE_FUNC(PlayScene);
     
 private:

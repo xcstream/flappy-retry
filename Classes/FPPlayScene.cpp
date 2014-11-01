@@ -101,14 +101,17 @@ bool PlayScene::init()
     
     
     this->runAction(Follow::create(myplane) );
+    myplane->getPhysicsBody()->setVelocityLimit(300);
     
-    
+    fire = ParticleSun::create();
+    fire->setTexture(TextureCache::getInstance()->addImage("res/fire.png"));
+    fire->setGravity(Vec2(-300,0));
+    addChild(fire);
     
     myListener->onTouchBegan = [=](Touch* touch,Event* event)
     {
         //some check
         CCLOG("touchbegin");
-        
         
         touchdown = true;
         
@@ -116,8 +119,8 @@ bool PlayScene::init()
         auto angle1 = (angle+0) /180*M_PI;
         auto angle2 = (angle+90) /180*M_PI;
         myplane->getPhysicsBody()->applyForce(Vec2(600000*cos(angle1),600000*sin(angle1)));
-        myplane->getPhysicsBody()->applyForce(Vec2(400000*cos(angle2),400000*sin(angle2)));
-
+        myplane->getPhysicsBody()->applyForce(Vec2(300000*cos(angle2),300000*sin(angle2)));
+        
         
 //        myplane->getPhysicsBody()->applyImpulse(Vec2(60000*cos(angle),60000*sin(angle)));
         
@@ -143,8 +146,9 @@ bool PlayScene::init()
         auto angle = myplane->getRotation();
         auto angle1 = (angle+0) /180*M_PI;
         auto angle2 = (angle+90) /180*M_PI;
-        myplane->getPhysicsBody()->applyForce(Vec2(-600000*cos(angle1),-600000*sin(angle1)));
-        myplane->getPhysicsBody()->applyForce(Vec2(-400000*cos(angle2),-400000*sin(angle2)));
+//        myplane->getPhysicsBody()->applyForce(Vec2(-600000*cos(angle1),-600000*sin(angle1)));
+//        myplane->getPhysicsBody()->applyForce(Vec2(-400000*cos(angle2),-400000*sin(angle2)));
+        myplane->getPhysicsBody()->resetForces();
         
     };
     dispatcher->addEventListenerWithSceneGraphPriority(myListener,this);
@@ -162,6 +166,10 @@ bool PlayScene::init()
 }
 
 void PlayScene::update(float delta){
+    auto pos =myplane->getPosition();
+    pos.x -=80;
+    fire->setPosition(pos);
+    
     if (touchdown) {
 //        myplane->getPhysicsBody()->applyTorque(2000000);
         auto angle = myplane->getPhysicsBody()->getRotation();
