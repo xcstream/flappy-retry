@@ -171,14 +171,16 @@ void PlayScene::update(float delta){
     fire->setPosition(pos);
     
     if (touchdown) {
-//        myplane->getPhysicsBody()->applyTorque(2000000);
+        myplane->getPhysicsBody()->applyTorque(20000);
         auto angle = myplane->getPhysicsBody()->getRotation();
         angle = (angle) /180*M_PI;
 
-//        myplane->getPhysicsBody()->applyImpulse(Vec2(60000*cos(angle),60000*sin(angle)), Vec2());
+//        myplane->getPhysicsBody()->applyImpulse(Vec2(600000*cos(angle),600000*sin(angle)), Vec2());
 
         
     }else{
+        myplane->getPhysicsBody()->applyTorque(-20000);
+
 //        myplane->getPhysicsBody()->applyTorque(-2000000);
 //        myplane->getPhysicsBody()->resetForces();
 
