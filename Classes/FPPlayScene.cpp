@@ -16,8 +16,8 @@ Scene* PlayScene::createScene()
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
     scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    scene->getPhysicsWorld()->setGravity(Vec2(0, -180));
-
+    scene->getPhysicsWorld()->setGravity(Vec2(0, -200));
+    scene->getPhysicsWorld()->setSpeed(1.2);
     
     // 'layer' is an autorelease object
     auto layer = PlayScene::create();
@@ -85,7 +85,6 @@ bool PlayScene::init()
     myplane->setPhysicsBody(body);
     addChild(myplane);
     
-    
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     auto myListener = EventListenerTouchOneByOne::create();
     
@@ -100,33 +99,24 @@ bool PlayScene::init()
     //note : since bounddries are 2 times the screen size calculate new center point
     
     
-    this->runAction(Follow::create(myplane) );
-    myplane->getPhysicsBody()->setVelocityLimit(300);
+//    this->runAction(Follow::create(myplane) );
+    myplane->getPhysicsBody()->setVelocityLimit(200);
     
     fire = ParticleSun::create();
-    fire->setTexture(TextureCache::getInstance()->addImage("res/fire.png"));
-    fire->setGravity(Vec2(-300,0));
+    fire->setTexture(Director::getInstance()->getTextureCache()->addImage("res/fire.png"));
+    
+//    fire->setGravity(Vec2(-300,0));
     addChild(fire);
+    
+
+    myplane->getPhysicsBody()->getPosition();
     
     myListener->onTouchBegan = [=](Touch* touch,Event* event)
     {
         //some check
         CCLOG("touchbegin");
-        
         touchdown = true;
-        
-        auto angle = myplane->getRotation();
-        auto angle1 = (angle+0) /180*M_PI;
-        auto angle2 = (angle+90) /180*M_PI;
-        myplane->getPhysicsBody()->applyForce(Vec2(600000*cos(angle1),600000*sin(angle1)));
-        myplane->getPhysicsBody()->applyForce(Vec2(300000*cos(angle2),300000*sin(angle2)));
-        
-        
-//        myplane->getPhysicsBody()->applyImpulse(Vec2(60000*cos(angle),60000*sin(angle)));
-        
-//        myplane->getPhysicsBody()->applyImpulse(Vec2(60000*cos(angle),60000*sin(angle)), Vec2(60000*cos(angle),60000*sin(angle)));
-//        myplane->getPhysicsBody()->applyTorque(1000000);
-        
+
         if (1)
         {
             return true;
@@ -134,21 +124,45 @@ bool PlayScene::init()
         return false;  
     };
     
+    for (int i = 0; i<0; i++) {
+        auto x =  arc4random()%(int)width;
+        auto y =  arc4random()%(int)height;
+        Sprite* rock = Sprite::create("res/debris.png");
+        rock->setPosition(x,y);
+        rock->setScale(0.3);
+        addChild(rock);
+        
+        rock->setPosition(x,y);
+        
+        auto rockbody = PhysicsBody::createCircle(30);
+//        rockbody->setDynamic(false);
+        auto vx =arc4random()%300;
+        auto vy =arc4random()%300;
+//        rockbody->setVelocity(Vec2(vx-150,vy-150));
+        rockbody->setMass(1000);
+        rock->setPhysicsBody(rockbody);
+        
+    }
+    
+    
     myListener->onTouchMoved = [=](Touch* touch,Event* event)
     {
-//        CCLOG("moved");
+
     };
     
     myListener->onTouchEnded = [=](Touch* touch,Event* event)
     {
-        CCLOG("end");
         touchdown = false;
-        auto angle = myplane->getRotation();
+        auto angle = myplane->getPhysicsBody()->getRotation();
+        
+        
+        
         auto angle1 = (angle+0) /180*M_PI;
         auto angle2 = (angle+90) /180*M_PI;
 //        myplane->getPhysicsBody()->applyForce(Vec2(-600000*cos(angle1),-600000*sin(angle1)));
 //        myplane->getPhysicsBody()->applyForce(Vec2(-400000*cos(angle2),-400000*sin(angle2)));
         myplane->getPhysicsBody()->resetForces();
+        
         
     };
     dispatcher->addEventListenerWithSceneGraphPriority(myListener,this);
@@ -171,15 +185,27 @@ void PlayScene::update(float delta){
     fire->setPosition(pos);
     
     if (touchdown) {
-        myplane->getPhysicsBody()->applyTorque(20000);
+//        myplane->getPhysicsBody()->applyTorque(20000);
         auto angle = myplane->getPhysicsBody()->getRotation();
-        angle = (angle) /180*M_PI;
-
-//        myplane->getPhysicsBody()->applyImpulse(Vec2(600000*cos(angle),600000*sin(angle)), Vec2());
-
+        angle = (-angle+15)*M_PI /180;
+        
+        myplane->getPhysicsBody()->applyImpulse(Vec2(60000*cos(angle),60000*sin(angle)), Vec2());
+//        myplane->getPhysicsBody()->applyTorque(300000);
+        myplane->getPhysicsBody()->setAngularVelocity(1.6);
         
     }else{
-        myplane->getPhysicsBody()->applyTorque(-20000);
+        myplane->getPhysicsBody()->getCollisionBitmask();
+        auto angle = myplane->getPhysicsBody()->getRotation();
+
+        if (sin(angle/180*M_PI) >0.5 ) {
+            myplane->getPhysicsBody()->setAngularVelocity(0);
+
+        }else{
+            myplane->getPhysicsBody()->setAngularVelocity(-1);
+
+        }
+
+//        myplane->getPhysicsBody()->applyTorque(-20000);
 
 //        myplane->getPhysicsBody()->applyTorque(-2000000);
 //        myplane->getPhysicsBody()->resetForces();
@@ -187,9 +213,23 @@ void PlayScene::update(float delta){
     }
     
     Vec2 v = myplane->getPhysicsBody()->getVelocity();
-    
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    auto height = visibleSize.height;
+    auto width = visibleSize.width;
+    if (myplane->getPositionX() > width) {
+        myplane->setPositionX(0);
+    }
+    if (myplane->getPositionX() <0) {
+        myplane->setPositionX(width);
+    }
+    if (myplane->getPositionY() > height) {
+        myplane->setPositionY(0);
+    }
+    if (myplane->getPositionY() <0) {
+        myplane->setPositionY(height);
+    }
     distance = v.x;
-    
     
 }
 
